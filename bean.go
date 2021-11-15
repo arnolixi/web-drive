@@ -1,5 +1,5 @@
 package arc
 
 type Bean interface {
-	Name()
+	Name() string
 }

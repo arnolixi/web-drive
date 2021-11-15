@@ -1,9 +1,24 @@
 package arc
 
-type Config struct {
-	*Server `mapstructure:"server"`
+type IConfig interface {
+	GetServer() IServer
+	GetDB() IDBConfig
+	GetInfluxDB() Influx
 }
 
-type Server struct {
-	Addr string `mapstructure:"addr"`
+type IDBConfig interface {
+	GetDriverName() string
+	GetDSN() string
+	GetConnSetting() []int
+	GetMode() string
+}
+
+type IServer interface {
+	GetAddr() string
+}
+
+type Influx interface {
+	GetUrl() string
+	GetAuth() (username, passwd string)
+	GetDatabase() string
 }

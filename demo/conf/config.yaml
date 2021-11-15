@@ -1,0 +1,41 @@
+server:
+  # default value: debug
+  mode: "debug" # debug release test
+  server_addr: ":17601"
+  version: "v0.0.1"
+  node_id: 2
+  auth_passwd: "crontab111"
+  register_passwd: "admin##@@@0@1"
+  heart_beat_time: 20
+  sign_key: as%@jdiqlmgb
+  rbac_file: "rbac/rbac.conf"
+
+log:
+  level: "debug"
+  filename: "access.log"
+  lumber_jeck:
+    # 日志文件最大50M  单位 M
+    max_size: 50
+    # 日志滚动 文件数量
+    max_backups: 10
+    # 日志保存时间
+    max_age: 30
+    # 是否压缩归档
+    compress: true
+
+
+
+
+db:
+#  driver_name: "mysql"
+#  dsn: "aos:Feeyo#@2020@(117.23.51.173:3306)/cronSrv?charset=utf8mb4&parseTime=True&loc=Local"
+#  max_open_conns: 1500
+#  max_idle_conns: 10
+  mode: "debug"
+  driver_name: "sqlite3"
+  dsn: "data/crontab.db?cache=shared"
+influxdb:
+  database: "plantask"
+  url: "http://117.23.51.174:8086"
+#  username: ""
+#  password: ""
