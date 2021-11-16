@@ -113,3 +113,11 @@ func (r *Reactor) applyAll() {
 		}
 	}
 }
+
+func (r *Reactor) Task(task ...ITask) *Reactor {
+	for _, t := range task {
+		t.Start()
+		BeanFactory.Set(t)
+	}
+	return r
+}
