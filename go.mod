@@ -1,4 +1,4 @@
-module "gitee.com/Arno-lixi/web-drive"
+module gitee.com/Arno-lixi/web-drive
 
 go 1.16
 
