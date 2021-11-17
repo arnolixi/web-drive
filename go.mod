@@ -1,4 +1,4 @@
-module github.com/arnolixi/web-drive
+module gitee.com/arnolixi/web-drive
 
 go 1.16
 
