@@ -2,7 +2,8 @@ package conf
 
 import (
 	"time"
-	arc "web-drive"
+
+	arc "gitee.com/Arno-lixi/web-drive"
 )
 
 type Config struct {

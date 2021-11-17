@@ -3,9 +3,10 @@ package main
 import (
 	"flag"
 	"log"
-	arc "web-drive"
-	"web-drive/demo/conf"
-	"web-drive/demo/src/controller"
+
+	arc "gitee.com/Arno-lixi/web-drive"
+	"gitee.com/Arno-lixi/web-drive/demo/conf"
+	"gitee.com/Arno-lixi/web-drive/demo/src/controller"
 
 	"github.com/gin-gonic/gin"
 )

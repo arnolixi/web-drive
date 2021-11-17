@@ -1,7 +1,7 @@
 package controller
 
 import (
-	arc "web-drive"
+	arc "gitee.com/Arno-lixi/web-drive"
 
 	"github.com/gin-gonic/gin"
 )
