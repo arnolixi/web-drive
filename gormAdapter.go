@@ -17,9 +17,9 @@ type GormAdapter struct {
 }
 
 func NewGormAdapter() *GormAdapter {
-	dbCfg := BeanFactory.Get(IConfig(nil)).(IConfig).GetDB()
+	dbCfg := BeanFactory.Get(IConfig(nil)).(IConfig)
 
-	switch dbCfg.GetDriverName() {
+	switch dbCfg.GetDB().GetDriverName() {
 	case "mysql":
 		return createMysql(dbCfg)
 	case "sqlite3":
@@ -27,7 +27,6 @@ func NewGormAdapter() *GormAdapter {
 	default:
 		return nil
 	}
-	// return &GormAdapter{}
 }
 
 func (g *GormAdapter) Name() string {
@@ -40,9 +39,9 @@ func (g *GormAdapter) IMigrateTo(des ...interface{}) {
 	}
 }
 
-func createMysql(config IDBConfig) *GormAdapter {
-
-	db, err := gorm.Open(mysql.Open(config.GetDSN()), &gorm.Config{
+func createMysql(config IConfig) *GormAdapter {
+	dbCfg := config.GetDB()
+	db, err := gorm.Open(mysql.Open(dbCfg.GetDSN()), &gorm.Config{
 		PrepareStmt: true,
 	})
 	if err != nil {
@@ -51,7 +50,7 @@ func createMysql(config IDBConfig) *GormAdapter {
 	}
 	d, _ := db.DB()
 	if d != nil {
-		connSetting := config.GetConnSetting()
+		connSetting := dbCfg.GetConnSetting()
 		d.SetMaxIdleConns(connSetting[0])
 		d.SetMaxOpenConns(connSetting[1])
 		d.SetConnMaxLifetime(time.Second * 30)
@@ -63,14 +62,15 @@ func createMysql(config IDBConfig) *GormAdapter {
 
 }
 
-func createSqlite(config IDBConfig) *GormAdapter {
-	dbDir := filepath.Dir(filepath.Clean(config.GetDSN()))
+func createSqlite(config IConfig) *GormAdapter {
+	dbCfg := config.GetDB()
+	dbDir := filepath.Dir(filepath.Clean(dbCfg.GetDSN()))
 	err := os.MkdirAll(dbDir, 0755)
 	if err != nil {
 		zap.L().Error("Create Sqlite DB file Failed.", zap.Error(err))
 		return nil
 	}
-	db, err := gorm.Open(sqlite.Open(config.GetDSN()), &gorm.Config{SkipDefaultTransaction: true, PrepareStmt: true})
+	db, err := gorm.Open(sqlite.Open(dbCfg.GetDSN()), &gorm.Config{SkipDefaultTransaction: true, PrepareStmt: true})
 	if err != nil {
 		return nil
 	}
